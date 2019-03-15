@@ -1,5 +1,6 @@
 package com.hendisantika.springbootrestapi.controller;
 
+import com.hendisantika.springbootrestapi.entity.Party;
 import com.hendisantika.springbootrestapi.entity.Person;
 import com.hendisantika.springbootrestapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,16 @@ public class PersonController {
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/parties")
+    public ResponseEntity<Collection<Party>> getPersonParties(@PathVariable long id) {
+        Optional<Person> person = personRepo.findById(id);
+
+        if (person != null) {
+            return new ResponseEntity<>(person.get().getParties(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
