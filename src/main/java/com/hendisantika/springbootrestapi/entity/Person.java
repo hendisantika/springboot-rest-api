@@ -1,8 +1,12 @@
 package com.hendisantika.springbootrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,6 +17,7 @@ import javax.persistence.*;
  * Date: 2019-03-15
  * Time: 06:35
  */
+@Data
 @Entity
 @Table(name = "people")
 public class Person {
@@ -32,31 +37,11 @@ public class Person {
     private String name;
     private int age;
 
-    public Person() {
-        // empty constuctor for Hibernate
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JoinTable(name = "people_parties",
+            joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "party_id", referencedColumnName = "party_id"))
+    private Set<Party> parties = new HashSet<Party>();
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 }
