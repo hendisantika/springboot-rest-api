@@ -22,3 +22,11 @@ CREATE TABLE people_parties (
   party_id BIGINT NOT NULL REFERENCES parties (party_id),
   PRIMARY KEY (person_id, party_id),
 );
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    user_id BIGINT PRIMARY KEY auto_increment,
+    username VARCHAR(128) UNIQUE,
+    password VARCHAR(256),
+    enabled BOOL
+);
