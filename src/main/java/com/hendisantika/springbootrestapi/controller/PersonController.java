@@ -36,7 +36,7 @@ public class PersonController {
     public ResponseEntity<Person> getPerson(@PathVariable long id) {
         Optional<Person> person = personRepo.findById(id);
 
-        if (person != null) {
+        if (person.isPresent()) {
             return new ResponseEntity<>(personRepo.findById(id).get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -59,7 +59,7 @@ public class PersonController {
     public ResponseEntity<Collection<Party>> getPersonParties(@PathVariable long id) {
         Optional<Person> person = personRepo.findById(id);
 
-        if (person != null) {
+        if (person.isPresent()) {
             return new ResponseEntity<>(person.get().getParties(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
