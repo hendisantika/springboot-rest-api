@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
@@ -58,5 +60,16 @@ public class PartyControllerTest {
     @Test
     public void partyNotFoundTest() throws Exception {
         mvc.perform(get("/parties/2").accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void getPartiesTest() throws Exception {
+        List<Party> parties = new ArrayList<Party>();
+        parties.add(party);
+
+        given(partyRepo.findAll()).willReturn(parties);
+        mvc.perform(get("/parties").accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].location", is("Transmart Buahbatu")));
     }
 }
