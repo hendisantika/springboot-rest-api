@@ -51,7 +51,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("naruto").secret("secret").accessTokenValiditySeconds(expiration)
+        clients.inMemory().withClient("naruto").secret(passwordEncoder().encode("secret")).accessTokenValiditySeconds(expiration)
                 .scopes("read", "write").authorizedGrantTypes("password", "refresh_token").resourceIds("resource");
     }
 
