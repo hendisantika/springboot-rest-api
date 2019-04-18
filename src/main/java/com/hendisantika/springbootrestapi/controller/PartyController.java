@@ -39,7 +39,7 @@ public class PartyController {
     }
 
     private ResponseEntity<Party> getPartyResponseEntity(@PathVariable long id, Optional<Party> party) {
-        if (party != null) {
+        if (party.isPresent()) {
             return new ResponseEntity<>(partyRepo.findById(id).get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

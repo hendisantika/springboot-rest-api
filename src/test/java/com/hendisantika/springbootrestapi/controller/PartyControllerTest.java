@@ -54,4 +54,9 @@ public class PartyControllerTest {
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.location", is("Transmart Buahbatu")));
     }
+
+    @Test
+    public void partyNotFoundTest() throws Exception {
+        mvc.perform(get("/parties/2").accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isNotFound());
+    }
 }
